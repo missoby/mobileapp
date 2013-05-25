@@ -1,0 +1,23 @@
+.nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+.nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+#home .ui-icon { background:  url(../img/home.png) 50% 50% no-repeat;  }
+#contact .ui-icon { background:  url(../img/contact.png) 50% 50% no-repeat;}
+#login .ui-icon { background:  url(../img/login.png) 50% 50% no-repeat;  }
+#about .ui-icon { background:  url(../img/about.png) 50% 50% no-repeat; }
+#forum .ui-icon { background:  url(../img/forum.png) 50% 50% no-repeat; }
+
+
+#info .ui-icon { background:  url(../img/computer.png) 50% 50% no-repeat; }
+#mobile .ui-icon { background:  url(../img/mobile.png) 50% 50% no-repeat; }
+#electro .ui-icon { background:  url(../img/electro.png) 50% 50% no-repeat; }
+#clothes .ui-icon { background:  url(../img/clothes.png) 50% 50% no-repeat; }
+#domicile .ui-icon { background:  url(../img/domicile.png) 50% 50% no-repeat; }
+#bijoux .ui-icon { background:  url(../img/bijoux.png) 50% 50% no-repeat; }
+
+
+img.hero {
+border: solid #fff 1px;
+padding: 1px;
+-webkit-box-shadow: 0px 3px 3px 1px rgba(000, 000, 000, 0.1);
+margin: 0 auto;
+}

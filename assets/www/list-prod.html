@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="Windows-1252">
+       <meta name="format-detection" content="telephone=no" />
+       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+   
+        <title>Souk.tn - Liste de Produits - </title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.3.1.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery.mobile-1.3.1.js"></script>
+
+        <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        
+    </head>
+    <body>
+    	<div data-role="page">
+            <!-- default panel  -->
+            <div data-role="panel" id="defaultpanel" style="margin-top: 110px;">
+                <ul data-role="listview" data-inset="true" class="ui-icon-alt">
+                    <li><a href="list-prod.html?id=1" data-ajax='false'>Informatique</a></li>
+                    <li><a href="list-prod.html?id=2" data-ajax='false'>Téléphones Portables</a></li>
+                    <li><a href="list-prod.html?id=3" data-ajax='false'>Electronique</a></li>
+                    <li><a href="list-prod.html?id=4" data-ajax='false'>Vêtements et Accessoires</a></li>
+                    <li><a href="list-prod.html?id=5" data-ajax='false'>Domicile et Bureau</a></li>
+                    <li><a href="list-prod.html?id=6" data-ajax='false'>Montres et Bijoux </a></li>
+                </ul>
+            </div>
+            <!-- /default panel -->
+            <!-- header -->
+            <div data-role="header" style="overflow:hidden;" data-position="fixed">
+            	<a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a> 
+		<h1>Souk.tn</h1>
+                <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+                    <ul>
+                        <li><a href="index.html" id="home" data-icon="custom" class="ui-btn-active">Acceuil</a></li>
+                        <li><a href="about.html" id="about" data-icon="custom">A Propos</a></li>
+                        <li><a href="forum.html" id="forum" data-icon="custom">Forum</a></li>
+                        <li id="auth"></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /header -->
+
+            <div data-role="content">
+                <form action="recherche.html" method="GET" data-ajax='false'>
+                    <input type="text" name="searsh" id="search" value="" placeholder="Rechercher....">
+                    <input type="submit" value="Rechecher" data-mini="true"/>
+                </form>
+                <hr>
+                <ul id="list" data-role="listview" data-inset="true">
+                    
+                </ul>
+                
+                   
+            </div><!-- /content -->
+        </div><!-- /page -->
+
+        <script>
+
+            $(document).ready(function(){
+                var url = document.URL; // Get current url
+                var stuff = url.split('=');
+                var id = stuff[stuff.length-1];
+                    $.ajax({
+                        type: 'POST',
+                        data: 'id='+id,
+                        dataType: 'json',
+                        //cache: false,
+                        url: 'http://10.0.2.2:8081/mobile/listprodmobile/listprod/',
+                     //   url: 'http://localhost:8081/mobile/listprodmobile/listprod',
+                     
+                        success: function(data){ 
+                          if (data['produit'].length == 0) {
+                           $('#commentaire').append('<li data-role="fieldcontain"><p style="white-space: normal;"> Aucun Avis Existant</p></li>');
+                           }
+                                else{
+                        for (key in data['produit'])
+                            {
+                                var prod = data['produit'][key]['idproduit'];
+                                var urlimg = 'http://10.0.2.2:8081/uploads/';
+                              //  var chaine = "produitdetail( " + prod + " )";
+                                $('#list').append(
+                                    '<li><a data-ajax="false" href="detailprod.html?id=' + prod + '" >'+
+                                    '<img style="width: 100%;height: 100%" src="'+ urlimg+ data['produit'][key]['photo']  
+                                    +'"/><h2>'+ data['produit'][key]['libelle']  +
+                                    '</h2></a></li>');
+                            }
+                        $('#list').listview('refresh');
+                                }
+                        },
+                        error: function(data){
+                            alert(data['produit']);
+                            alert('il y a un probleme!!');                        
+                        } 
+                    });
+
+             });
+             
+        </script>
+		<script>
+        $(document).ready(function(){
+            var id = window.localStorage.getItem('idpersonne');
+            if(window.localStorage.getItem('login') == null){
+                //window.localStorage.removeItem("id");
+                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom">Login</a>');
+              $('#auth').navbar();
+            }
+            else if (window.localStorage.getItem('type') == 'commercant'){
+              $('#auth').append(
+              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
+              + id + '">'+window.localStorage.getItem('login')+'</a>');
+              $('#auth').navbar();
+          }
+            else {
+              $('#auth').append(
+              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
+              + id + '">'+window.localStorage.getItem('login')+'</a>');
+            $('#auth').navbar();
+          }
+         
+        });
+       </script>
+    </body>
+</html>
