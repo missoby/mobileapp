@@ -11,12 +11,13 @@
         <script src="js/jquery.js"></script>
         <script src="js/jquery.mobile-1.3.1.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script src="js/loginlink.js"></script>
     </head>
     <body>
     	<div data-role="page">
             <!-- header -->
             <div data-role="header" style="overflow:hidden;" data-position="fixed">
-            	<a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a>
+            	<a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catï¿½gories</a>
                 <h1>Souk.tn</h1>
                 <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
                     <ul>
@@ -33,9 +34,9 @@
             <div data-role="panel" id="defaultpanel" style="margin-top: 110px;">
                 <ul data-role="listview" data-inset="true" class="ui-icon-alt">
                     <li><a href="list-prod.html?id=1" data-ajax='false'>Informatique</a></li>
-                    <li><a href="list-prod.html?id=2" data-ajax='false'>Téléphones Portables</a></li>
+                    <li><a href="list-prod.html?id=2" data-ajax='false'>TÃ©lÃ©phones Portables</a></li>
                     <li><a href="list-prod.html?id=3" data-ajax='false'>Electronique</a></li>
-                    <li><a href="list-prod.html?id=4" data-ajax='false'>Vêtements et Accessoires</a></li>
+                    <li><a href="list-prod.html?id=4" data-ajax='false'>VÃ©tements et Accessoires</a></li>
                     <li><a href="list-prod.html?id=5" data-ajax='false'>Domicile et Bureau</a></li>
                     <li><a href="list-prod.html?id=6" data-ajax='false'>Montres et Bijoux </a></li>
                 </ul>
@@ -50,40 +51,18 @@
                 <hr>
                 <h3>Espace Forum</h3>
                 <hr>
-                <div data-role="navbar"class="nav-glyphish-example" >
+                <div data-role="navbar" class="nav-glyphish-example" >
                     <ul>
                         <li><a href="sujet.html?id=1" data-ajax='false' id="info" data-icon="custom">Informatique</a></li>
-                        <li><a href="sujet.html?id=2" data-ajax='false' id="mobile" data-icon="custom">Téléphones Portables</a></li>
+                        <li><a href="sujet.html?id=2" data-ajax='false' id="mobile" data-icon="custom">TÃ©lÃ©phones Portables</a></li>
                         <li><a href="sujet.html?id=3" data-ajax='false' id="electro" data-icon="custom">Electronique</a></li>
-                        <li><a href="sujet.html?id=4" data-ajax='false' id="clothes" data-icon="custom">Vêtements et Accessoires</a></li>
+                        <li><a href="sujet.html?id=4" data-ajax='false' id="clothes" data-icon="custom">VÃ©tements et Accessoires</a></li>
                         <li><a href="sujet.html?id=5" data-ajax='false' id="domicile" data-icon="custom">Domicile et Bureau</a></li>
                         <li><a href="sujet.html?id=6" data-ajax='false' id="bijoux" data-icon="custom">Montres et Bijoux </a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /content -->
         </div><!-- /page -->
-		<script>
-        $(document).ready(function(){
-            var id = window.localStorage.getItem('idpersonne');
-            if(window.localStorage.getItem('login') == null){
-                //window.localStorage.removeItem("id");
-                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom">Login</a>');
-              $('#auth').navbar();
-            }
-            else if (window.localStorage.getItem('type') == 'commercant'){
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-              $('#auth').navbar();
-          }
-            else {
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-            $('#auth').navbar();
-          }
-         
-        });
-       </script>
+	
     </body>
 </html>

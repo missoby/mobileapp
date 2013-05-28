@@ -5,18 +5,21 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
-        <title>Souk.tn - Détails Produit - </title>
+        <title>Souk.tn - DÃ©tails Produit - </title>
         <link rel="stylesheet" href="css/jquery.mobile-1.3.1.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery.js"></script>
-        <script src="js/jquery.mobile-1.3.1.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script src="js/myapp.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
+        <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script src="js/loginlink.js"></script>
     </head>
     <body>
         <div data-role="page">
             <!-- header -->
             <div data-role="header" style="overflow:hidden;" data-position="fixed">
-                <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a>
+                <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catï¿½gories</a>
                 <h1>Souk.tn</h1>
                 <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
                     <ul>
@@ -32,9 +35,9 @@
             <div data-role="panel" id="defaultpanel" style="margin-top: 110px;">
                 <ul data-role="listview" data-inset="true" class="ui-icon-alt">
                     <li><a href="list-prod.html?id=1" data-ajax='false'>Informatique</a></li>
-                    <li><a href="list-prod.html?id=2" data-ajax='false'>Téléphones Portables</a></li>
+                    <li><a href="list-prod.html?id=2" data-ajax='false'>TÃ©lÃ©phones Portables</a></li>
                     <li><a href="list-prod.html?id=3" data-ajax='false'>Electronique</a></li>
-                    <li><a href="list-prod.html?id=4" data-ajax='false'>Vêtements et Accessoires</a></li>
+                    <li><a href="list-prod.html?id=4" data-ajax='false'>VÃ©tements et Accessoires</a></li>
                     <li><a href="list-prod.html?id=5" data-ajax='false'>Domicile et Bureau</a></li>
                     <li><a href="list-prod.html?id=6" data-ajax='false'>Montres et Bijoux </a></li>
                 </ul>
@@ -42,6 +45,7 @@
             <!-- /default panel -->
 
             <div data-role="content">
+                <a href="#" data-role="button" onclick="add()"> Add</a>
                 <form action="recherche.html" method="GET" data-ajax='false'>
                     <input type="text" name="searsh" id="search" value="" placeholder="Rechercher....">
                     <input type="submit" value="Rechecher" data-mini="true"/>
@@ -51,20 +55,7 @@
                 <h3>Avis des internaute</h3>
                 <hr>
                 <ul id="avis" data-role="listview" data-inset="true"></ul>
-                      <div id="cart_wrapper">
-	
-		<form action="#" id="cart_form" name="cart_form">
-		
-			<div class="cart-info"></div>
-			
-			<div class="cart-total">
-			
-				<b>Total Charges:</b> $<span>0</span>
-				
-				<input type="hidden" name="total-hidden-charges" id="total-hidden-charges" value="0" />
-			</div>
-		</form>
-	</div>
+      
             </div><!-- /content -->
         </div><!-- /page -->
 
@@ -74,7 +65,7 @@
                 var url = document.URL; 
                 var stuff = url.split('=');
                 var idd = stuff[stuff.length-1];
-                // détails produit
+                // dï¿½tails produit
                 $.ajax({
                     type: 'POST',
                     data: 'id='+idd,
@@ -89,7 +80,9 @@
                             note += '<img style="margin-left:5px;"src="img/star-on.png">';
                         }
                         $("#detail").append(
-                        '<h3>'+ data['detail']['libelle']+'</h3><hr><img  class="hero" style="width: 294px;height:124px" src="'
+                            '<span id="detailprodpanier" data-idproduit="'+data['detail']['idproduit']
+                            +'" data-nomproduit="'+data['detail']['libelle']+'" data-prix="'
+                            +data['detail']['prix'] +'"></span><h3>'+ data['detail']['libelle']+'</h3><hr><img  class="hero" style="width: 294px;height:124px" src="'
                             + urlimg+ data['detail']['photo']  
                             +'"/> <p style="margin-left: 30%;">'+note+'</p><a style="color: rgb(177, 6, 12);font-weight: bold;" data-ajax="false" href="commercant.html?id='
                             + data['detail']['commercant_idcommercant'] + '" > Fournisseur du produit</a>'
@@ -98,65 +91,7 @@
                             +'<h4 style="color: rgb(177, 6, 12);">Stock : <span style="color: black">'+ data['detail']['stock']
                             + '</h4></span>'
                             +'<h4 style="color: rgb(177, 6, 12);">Prix : <span style="color: black">'+ data['detail']['prix']
-                            + 'DT</h4></span>'+'<button class="add-to-cart-button" >ajouter au panier</button>' );
-                        //parti panier        
-                        var Arrays=new Array();
-         
-                        $('.add-to-cart-button').click(function(){
-		
-                            var thisID 	  = $(this).parent().find('#detail').html();
-		
-                            var itemname  = $(this).parent().find('.item_name').html();
-                            localStorage.setItem('itemname', itemname);
-                            //var getstr = localStorage.getItem('itemname');
-                            //alert(getstr);
-                  
-                            var itemprice = $(this).parent().find('.price').html();
-		
-                            Arrays.push(thisID);
-                    
-			
-                            var prev_charges = $('.cart-total span').html();
-                            prev_charges = parseInt(prev_charges)+parseInt(itemprice);
-			
-                            $('.cart-total span').html(prev_charges);
-                            $('#total-hidden-charges').val(prev_charges);
-			
-                            var Height = $('#cart_wrapper').height();
-                            $('#cart_wrapper').css({height:Height+parseInt(45)});
-	         
-                            $('#cart_wrapper .cart-info').append(
-                            '<div class="shopp" id="each"><div class="label">'
-                                +itemname+'</div><div class="shopp-price"> $<em>'
-                                +itemprice+'</em></div><span class="shopp-quantity">1</span><img src="remove.png" class="remove" /><br class="all" /></div>');
-                      
-                        });	
-	
-                        $('.remove').livequery('click', function() {
-		
-                            var deduct = $(this).parent().children(".shopp-price").find('em').html();
-                            var prev_charges = $('.cart-total span').html();
-		
-                            var thisID = $(this).parent().find('#each').html();;
-		
-                            var pos = getpos(Arrays,thisID);
-                            Arrays.splice(pos,1,"0")
-		
-                            prev_charges = parseInt(prev_charges)-parseInt(deduct);
-                            $('.cart-total span').html(prev_charges);
-                            $('#total-hidden-charges').val(prev_charges);
-                            $(this).parent().remove();
-                        });
-                        function include(arr, obj) {
-                            for(var i=0; i<arr.length; i++) {
-                                if (arr[i] == obj) return true;
-                            }
-                        }
-                        function getpos(arr, obj) {
-                            for(var i=0; i<arr.length; i++) {
-                                if (arr[i] == obj) return i;
-                            }
-                        }
+                            + 'DT</h4></span>' );
                     },
                     error: function(){
                         alert('il y a un probleme!!');                        
@@ -194,55 +129,8 @@
                         alert('il y a un probleme!!');                        
                     } 
                 });
-               
-
             });
         </script>
-        <script>
-            $(document).ready(function(){
-                var id = window.localStorage.getItem('idpersonne');
-                if(window.localStorage == 0){
-                    $('#auth').append('<a href="C:/Users/missoby/Desktop/platform-mobile/login.html" id="login" data-icon="custom" class="ui-btn-active">Login</a>');
-                    $('#auth').navbar();
-                }
-                else if (window.localStorage.getItem('type') == 'commercant'){
-                    $('#auth').append(
-                    '<a data-ajax="false" id="login" data-icon="custom" href="C:/Users/missoby/Desktop/platform-mobile/profilcommercant.html?id=' 
-                        + id + '">'+window.localStorage.getItem('login')+'</a>');
-                    $('#auth').navbar();
-                }
-                else {
-                    $('#auth').append(
-                    '<a data-ajax="false" id="login" data-icon="custom" href="C:/Users/missoby/Desktop/platform-mobile/profilclient.html?id=' 
-                        + id + '">'+window.localStorage.getItem('login')+'</a>');
-                    $('#auth').navbar();
-                }
-         
-            });
-        </script>
-        <script>
-        $(document).ready(function(){
-            var id = window.localStorage.getItem('idpersonne');
-            if(window.localStorage.getItem('login') == null){
-                //window.localStorage.removeItem("id");
-                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom">Login</a>');
-              $('#auth').navbar();
-            }
-            else if (window.localStorage.getItem('type') == 'commercant'){
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-              $('#auth').navbar();
-          }
-            else {
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-            $('#auth').navbar();
-          }
-         
-        });
-       </script>
-
+  
     </body>
 </html>

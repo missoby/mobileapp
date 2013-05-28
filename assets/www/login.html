@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery.js"></script>
         <script src="js/jquery.mobile-1.3.1.js"></script>
+        <script src="js/loginlink.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
     </head>
     <body>
@@ -32,101 +33,76 @@
             <div data-role="panel" id="defaultpanel">
                 <ul data-role="listview" data-inset="true" class="ui-icon-alt">
                     <li><a href="#">Informatique</a></li>
-                    <li><a href="#">Téléphones Portables</a></li>
+                    <li><a href="#">TÃ©lÃ©phones Portables</a></li>
                     <li><a href="#">Electronique</a></li>
-                    <li><a href="#">Vêtements et Accessoires</a></li>
+                    <li><a href="#">VÃ©tements et Accessoires</a></li>
                     <li><a href="#">Domicile et Bureau</a></li>
                     <li><a href="#">Montres et Bijoux </a></li>
 
                 </ul>
             </div>
             <!-- /default panel -->
-
             <div data-role="content">
                 <h3>Connectez Vous</h3>
                 <hr>
                 <form action="#" method="POST" data-ajax='false'>
-           
+
                     <label><strong>Login</strong></label>
                     <input type="text" name="login" value="">
-                
+
                     <label><strong>Mot de passe</strong></label>
-                <input type="password" name="pwd" value="">
-                
-                <input type="submit" value="Se Connecter" data-mini="true" data-theme="b">
+                    <input type="password" name="pwd" value="">
+
+                    <input type="submit" value="Se Connecter" data-mini="true" data-theme="b">
                 </form>
             </div><!-- /content -->
         </div><!-- /page -->
-		<script>
-		$(document).ready(function(){
-			$('form').on('submit', function(event){
-    			var postData = $(this).serialize();
-    			event.preventDefault();
-				$.ajax({
-					type: 'POST',
-					data: postData,
-                    dataType: 'json',
-                    //cache: false,
-                    //url: 'http://localhost:8081/mobile/listprodmobile/login',
-                    url: 'http://10.0.2.2:8081/mobile/listprodmobile/login',
-					success: function(resultat){
-						traitementok(resultat);
-					},
-					error: function(resultat){
-                        alert(resultat);
-						alert('il y a un probleme!!');                        
-					}
-				});
+        <script>
+            $(document).ready(function(){
+                $('form').on('submit', function(event){
+                    var postData = $(this).serialize();
+                    event.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        data: postData,
+                        dataType: 'json',
+                        //cache: false,
+                        //url: 'http://localhost:8081/mobile/listprodmobile/login',
+                        url: 'http://10.0.2.2:8081/mobile/listprodmobile/login',
+                        success: function(resultat){
+                            traitementok(resultat);
+                        },
+                        error: function(resultat){
+                            alert(resultat);
+                            alert('il y a un probleme!!');                        
+                        }
+                    });
 	
-    	});
+                });
 
-        function traitementok(res){
-            if(res['error'] == 0){
-                alert(res['login']);
-               // $('#iderror').remove();
-                //navigator.notification.alert('id: '+res['id']+' nom: '+res['nom'], false, 'vous êtes connecté', 'OK');
-			 window.localStorage.setItem("idpersonne", res['idpersonne']);
-             window.localStorage.setItem("login", res['login']);
-			 window.localStorage.setItem("type", res['type']);
-             window.location='./index.html';
+                function traitementok(res){
+                    if(res['error'] == 0){
+                        alert(res['login']);
+                        window.localStorage.setItem("idpersonne", res['idpersonne']);
+                        window.localStorage.setItem("login", res['login']);
+                        window.localStorage.setItem("type", res['type']);
+                        window.localStorage.setItem("email", res['email']);
+                        window.localStorage.setItem("adresse", res['adresse']);
+                        window.localStorage.setItem("pays", res['pays']);
+                        window.localStorage.setItem("ville", res['ville']);
+                        window.localStorage.setItem("nom", res['nom']);
+                        window.localStorage.setItem("prenom", res['prenom']);
+                        window.localStorage.setItem("tel", res['tel']);
+     
+                        window.location='index.html';
 			 
-            }
-            else{
-                alert("erreur !!");
-                // navigator.notification.alert(res['error'], false, 'Erreur de connexion', 'OK');
-              //  $('#iderror').remove();  
-                //$('#locationerror').after('<div class="alert alert-error" id="iderror"> <a class="close" data-dismiss="alert" href="#">×</a>'+res['error'] +'</div>');
-            }
-        }
+                    }
+                    else{
+                        $('hr').prepend('<div class="ui-bar ui-bar-e"><h3>'+res['error'] +'</h3></div>');
+                    }
+                }
 
-});
-
-
-
-
+            });
         </script>
-	<script>
-        $(document).ready(function(){
-            var id = window.localStorage.getItem('idpersonne');
-            if(window.localStorage.getItem('login') == null){
-                //window.localStorage.removeItem("id");
-                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom" class="ui-btn-active">Login</a>');
-              $('#auth').navbar();
-            }
-            else if (window.localStorage.getItem('type') == 'commercant'){
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-              $('#auth').navbar();
-          }
-            else {
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-            $('#auth').navbar();
-          }
-         
-        });
-       </script>
     </body>
 </html>

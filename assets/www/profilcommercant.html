@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery.js"></script>
         <script src="js/jquery.mobile-1.3.1.js"></script>
+        <script src="js/loginlink.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
     </head>
     <body>
@@ -32,9 +33,9 @@
             <div data-role="panel" id="defaultpanel">
                 <ul data-role="listview" data-inset="true" class="ui-icon-alt">
                     <li><a href="#">Informatique</a></li>
-                    <li><a href="#">Téléphones Portables</a></li>
+                    <li><a href="#">Tï¿½lï¿½phones Portables</a></li>
                     <li><a href="#">Electronique</a></li>
-                    <li><a href="#">Vêtements et Accessoires</a></li>
+                    <li><a href="#">Vï¿½tements et Accessoires</a></li>
                     <li><a href="#">Domicile et Bureau</a></li>
                     <li><a href="#">Montres et Bijoux </a></li>
 
@@ -62,54 +63,31 @@
 
                     <div class="ui-block-a">
                         <p><strong style="color: rgb(177, 6, 12);">Nom : </strong>olfa</p>
-                        <p><strong style="color: rgb(177, 6, 12);">Prénom : </strong>olfa</p>
+                        <p><strong style="color: rgb(177, 6, 12);">Prï¿½nom : </strong>olfa</p>
                         <p><strong style="color: rgb(177, 6, 12);">Login : </strong>olfa</p>
                         <p><strong style="color: rgb(177, 6, 12);">Pays : </strong>olfa</p>
                     </div>
                     <div class="ui-block-b">
                         <p><strong style="color: rgb(177, 6, 12);">Ville : </strong>ariana</p>
                         <p><strong style="color: rgb(177, 6, 12);" >Adresse : </strong>la3wina</p>
-                        <p><strong style="color: rgb(177, 6, 12);">Téléphone : </strong>23456987</p>
+                        <p><strong style="color: rgb(177, 6, 12);">TÃ©lÃ©phone : </strong>23456987</p>
                         <p><strong style="color: rgb(177, 6, 12);">Email : </strong>marwabriki@hotmail.fr</p>
                     </div>
                 </div><!-- /grid-a -->
-                <h4>Informations sur Votre Société</h4>
+                <h4>Informations sur Votre Sociï¿½tï¿½</h4>
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
-                        <p><strong style="color: rgb(177, 6, 12);">Société : </strong>olfa</p>
-                        <p><strong style="color: rgb(177, 6, 12);">Adresse Société : </strong>olfa</p>
-                        <p><strong style="color: rgb(177, 6, 12);">Téléphone : </strong>olfa</p>
+                        <p><strong style="color: rgb(177, 6, 12);">SociÃ©tÃ© : </strong>olfa</p>
+                        <p><strong style="color: rgb(177, 6, 12);">Adresse SociÃ©tÃ© : </strong>olfa</p>
+                        <p><strong style="color: rgb(177, 6, 12);">TÃ©lÃ©phone : </strong>olfa</p>
                     </div>
                     <div class="ui-block-b">
-                        <p><strong style="color: rgb(177, 6, 12);">Téléphone : </strong>ariana</p>
+                        <p><strong style="color: rgb(177, 6, 12);">Tï¿½lï¿½phone : </strong>ariana</p>
                         <p><strong style="color: rgb(177, 6, 12);" >Site web : </strong>la3wina</p>
                     </div>
-                    <p><strong style="color: rgb(177, 6, 12);">Description Société</strong> vetement</p>
+                    <p><strong style="color: rgb(177, 6, 12);">Description Sociï¿½tï¿½</strong> vetement</p>
                 </div><!-- /grid-a -->
             </div><!-- /content -->
         </div><!-- /page -->
-		<script>
-        $(document).ready(function(){
-            var id = window.localStorage.getItem('idpersonne');
-            if(window.localStorage.getItem('login') == null){
-                //window.localStorage.removeItem("id");
-                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom">Login</a>');
-              $('#auth').navbar();
-            }
-            else if (window.localStorage.getItem('type') == 'commercant'){
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
-              + id + '" class="ui-btn-active">'+window.localStorage.getItem('login')+'</a>');
-              $('#auth').navbar();
-          }
-            else {
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-            $('#auth').navbar();
-          }
-         
-        });
-       </script>
     </body>
 </html>

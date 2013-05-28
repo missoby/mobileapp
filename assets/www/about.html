@@ -11,6 +11,7 @@
         <script src="js/jquery.js"></script>
         <script src="js/jquery.mobile-1.3.1.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
+        <script src="js/loginlink.js"></script>
     </head>
     <body>
     	<div data-role="page">
@@ -32,39 +33,13 @@
                 <h3>A Propos de Nous</h3>
                 <hr>
                 <p>
-                    Vous étes Client, Commercant, Vous cherchez un endroit rassemblant des différents produits, 
+                    Vous Ãªtes Client, Commercant, Vous cherchez un endroit rassemblant des diffÃ¨rents produits, 
                     rassemblant un grand public, Facilitant la tache de vente en ligne, vous cherchez un moyen 
                     d'interaction avec d'autres client ainsi que les commercants. Vous tombez sur la bonne emplacement 
                     notre plateforme vous offre toutes ces services afin de rendre votre vie plus facile.
                 </p>
-                <form action="" >
-                <label for="text-basic">Abonnez-vous à Notre Newsletter:</label>
-                <input type="text" name="text-basic" id="text-basic" value="" placeholder="Tapez votre E-mail">
-                </form>
             </div><!-- /content -->
         </div><!-- /page -->
-		<script>
-        $(document).ready(function(){
-            var id = window.localStorage.getItem('idpersonne');
-            if(window.localStorage.getItem('login') == null){
-                //window.localStorage.removeItem("id");
-                $('#auth').append('<a  data-ajax="false" href="login.html" id="login" data-icon="custom">Login</a>');
-              $('#auth').navbar();
-            }
-            else if (window.localStorage.getItem('type') == 'commercant'){
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilcommercant.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-              $('#auth').navbar();
-          }
-            else {
-              $('#auth').append(
-              '<a data-ajax="false" id="login" data-icon="custom" href="profilclient.html?id=' 
-              + id + '">'+window.localStorage.getItem('login')+'</a>');
-            $('#auth').navbar();
-          }
-         
-        });
-       </script>
+	
     </body>
 </html>
