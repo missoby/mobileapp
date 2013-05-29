@@ -1,16 +1,19 @@
 
 	document.addEventListener("deviceready", onDeviceReady, false);
-	function onDeviceReady()
+	
+        
+        
+        function onDeviceReady()
 	{
-		var db = window.openDatabase('platforme', '1.0', 'open base', 200000);
+		
+                var db = window.openDatabase('platforme', '1.0', 'open base', 200000);
 		db.transaction(createDB, errorCB, successCB);
 	}
 
 	function createDB(tx)
 		{
 			//tx.executeSql('DROP TABLE IF EXISTS PANIER');
-			tx.executeSql('CREATE TABLE IF NO EXISTS PANIER (idproduit, idclient, nomproduit, prix)');
-                        alert('ala my love');
+			tx.executeSql('CREATE TABLE IF NOT EXISTS PANIER (idproduit, idclient, nomproduit, prix)');
 		} 
 
 		function errorCB(err)
@@ -19,5 +22,5 @@
 	}
 
 	function successCB() {
-        alert("success!");
+       // alert("success!");
     }

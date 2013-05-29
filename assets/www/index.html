@@ -17,6 +17,10 @@
   
     </head>
     <body>
+        <script>
+            if (window.localstorage.getItem('panier') == 1)
+                $('#idd').append('<a href="panier.html">voir Panier</a>');
+        </script>
     	<div data-role="page">
             <!-- header -->
             <div data-role="header" style="overflow:hidden;" data-position="fixed">
