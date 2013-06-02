@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="Windows-1252">
+        <meta charset="UTF-8">
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
@@ -10,92 +10,127 @@
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery.js"></script>
         <script src="js/jquery.mobile-1.3.1.js"></script>
-        <script src="js/loginlink.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
-        
+        <script src="js/panier.js"></script>
+        <script src="js/menu.js"></script>
         <script>
-            document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady()
-	{		
-                var db = window.openDatabase('platforme', '1.0', 'open base', 200000);
-		db.transaction(createDB, errorCB, successCB);
-	}
-
-	function createDB(tx)
-		{
-                    tx.executeSql('SELECT * FROM PANIER', [], querySuccess, errorCB);
-		} 
-
-		function errorCB(err)
-	{
-		console.log('Error processing SQL:' +err.code);
-	}
-        
-        function querySuccess(tx, results)
-        {
-            for(var i=0; i<results.rows.lenght;i++ )
-		{
-                    alert(results.rows.item(i).nomproduit); //affichage
-                }
-        }
-
-        </script>
-    </head>
-    <body>
-        <input type="button" value="Annuler" onclick="annuler();">
-         <input type="button" value="Commander" onclick="commander();">
-         
-    <script>
-        function commander()
-        {
-             var db = window.openDatabase('platforme', '1.0', 'PhoneGap test', 200000);
-            db.transaction(commandeQuery, errorCB);
-        }
-        
-        function commandeQuery(tx)
-        {
-            tx.executeSql('SELECT * FROM PANIER', [], commandequerySuccess, errorCB);
-            
-            function commandequerySuccess(tx, results)
+            function commander()
             {
-                 var jsonString = JSON.stringify(results);
+                var db = window.openDatabase('platforme', '1.0', 'PhoneGap test', 200000);
+ 
+                db.transaction(commandequery, errorCB);
+     
+            }
+            
+            function commandequery(tx)
+            {
+
+                tx.executeSql('SELECT * FROM PANIER', [], reqcmd, errorCB);
+                    
+            }
+            
+             function reqcmd(tx, results)
+                {
+
+                   var len = results.rows.length;
+                   alert(len);
+                   tableau = new Array();
+                   var tab= new Array();
+                   
+                    for (var i=0; i<len; i++){
+                            tab['nom'] = results.rows.item(i).nomproduit;
+                            tab['prix'] = results.rows.item(i).prix;
+                            tab['idclient'] = results.rows.item(i).idclient;
+                            tableau.push(tab);
+                    }
+
+                  //  var jsonString = JSON.stringify(tableau);
+                    //alert(jsonString);
+                    //alert(jsonString[0]);
                     $.ajax({
                         type: 'POST',
-                        data:  {data : jsonString}, 
+                        data:  {tabb : tableau},
+                       // dataType: 'json',
                         //url: 'http://localhost:8081/mobile/listprodmobile/login',
-                        url: 'http://10.0.2.2:8081/mobile/listprodmobile/login',
-                        success: function(){
-                            alert('OK');
-                            tx.executeSql('DROP TABLE IF EXISTS PANIER');
-                            window.localStorage.setItem("panier", 0);
-                            window.location = 'index.html';
+                        url: 'http://10.0.2.2:8081/mobile/listprodmobile/panier',
+                        success: function(res){
+                            alert(res);
+                            //tx.executeSql('DROP TABLE IF EXISTS PANIER');
+                            //window.localStorage.setItem("panier", 0);
+                            //window.location = 'index.html';
                         },
                         error: function(resultat){
                             alert(resultat);
                             alert('il y a un probleme!!');                        
                         }
                     });
+                }
+            
+            function annuler()
+            {
+                var db = window.openDatabase('platforme', '1.0', 'PhoneGap test', 200000);
+                db.transaction(annulerQuery, errorCB);
             }
-               
-        }
-        
-        function annuler()
-        {
-            var db = window.openDatabase('platforme', '1.0', 'PhoneGap test', 200000);
-            db.transaction(annulerQuery, errorCB);
-        }
-        
-        function annulerQuery(tx)
-        {
-            tx.executeSql('DROP TABLE IF EXISTS PANIER');
-            window.localStorage.setItem("panier", 0);
-            window.location = 'index.html';
-        }
-        
-        function errorCB(err)
-	{
-		console.log('Error processing SQL:' +err.code);
-	}
-    </script>
+            
+            function annulerQuery(tx)
+            {
+                tx.executeSql('DROP TABLE IF EXISTS PANIER');
+                window.localStorage.setItem("panier", 0);
+                window.location = 'index.html';
+            }
+            
+            function errorCB(err)
+            {
+                console.log('Error processing SQL:' +err.code);
+            }
+        </script>
+    </head>
+    <body>
+            <div data-role="page">
+            <!-- header -->
+               <div data-role="header" data-position="fixed">
+                <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a>
+                <h1>Souk.tn</h1>
+                <div data-role="navbar" id="menu" class="nav-glyphish-example" data-grid="c">
+                    <ul>
+                        <li><a href="index.html"  data-ajax='false' id="home" data-icon="custom">Acceuil</a></li>
+                        <li><a href="about.html" data-ajax='false' id="about" data-icon="custom">A Propos</a></li>
+                        <li id="for"><a href="forum.html" data-ajax='false' id="forum" data-icon="custom">Forum</a></li>
+                        <li id="auth"></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /header -->
+            <!-- default panel  -->
+            <div data-role="panel" id="defaultpanel" style="margin-top: 110px;">
+                <ul data-role="listview" data-inset="true" class="ui-icon-alt">
+                    <li><a href="list-prod.html?id=1" data-ajax='false'>Informatique</a></li>
+                    <li><a href="list-prod.html?id=2" data-ajax='false'>Téléphones Portables</a></li>
+                    <li><a href="list-prod.html?id=3" data-ajax='false'>Electronique</a></li>
+                    <li><a href="list-prod.html?id=4" data-ajax='false'>Vétements et Accessoires</a></li>
+                    <li><a href="list-prod.html?id=5" data-ajax='false'>Domicile et Bureau</a></li>
+                    <li><a href="list-prod.html?id=6" data-ajax='false'>Montres et Bijoux </a></li>
+                </ul>
+            </div>
+            <!-- /default panel -->
+
+            <div data-role="content">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-role="button" onclick="annuler();">Vider le panier</a></li>
+                        <li><a href="#" data-role="button" onclick="commander();">Commander</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+                <hr>
+                <table id="table" data-role="table" data-mode="" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                    <tr id="td" class="ui-bar-c">
+                        <th>Nom Produit</th>
+                        <th>Prix</th>
+                    </tr>
+                </table>
+            </div>
+            </div>
+
+     
     </body>
 </html>

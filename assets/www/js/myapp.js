@@ -4,11 +4,12 @@
 		var idproduit = $('#detailprodpanier').data('idproduit');
 		var nomproduit = $('#detailprodpanier').data('nomproduit');
 		var prix = $('#detailprodpanier').data('prix');
+                var idclient = $('#detailprodpanier').data('idclient');
 
-		tx.executeSql('insert into PANIER values('+ idproduit +', ' + nomproduit +', ' + prix +')', [], alert('success save'));
+		tx.executeSql('insert into PANIER (idproduit, idclient, nomproduit, prix) values("'+ idproduit +'","' + idclient +'","' + nomproduit +'","' + prix +'")', [], alert('Produit ajouter dans votre panier avec sucess'));
 
-                window.localStorage.setItem("panier", 1);
-                window.location='index.html';
+               // window.localStorage.setItem("panier", 1);
+                window.location='panier.html';
 	}
 
 	function add(){

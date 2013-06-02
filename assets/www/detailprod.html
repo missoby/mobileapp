@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="Windows-1252">
+        <meta charset="UTF-8">
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
@@ -13,19 +13,20 @@
         <script src="js/myapp.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
         <script type="text/javascript" src="cordova-2.7.0.js"></script>
-        <script src="js/loginlink.js"></script>
+        <script src="js/detailprod.js"></script>
+        <script src="js/menu.js"></script>
     </head>
     <body>
         <div data-role="page">
             <!-- header -->
-            <div data-role="header" style="overflow:hidden;" data-position="fixed">
-                <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de cat�gories</a>
-                <h1>Souk.tn</h1>
-                <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+            <div data-role="header" data-position="fixed">
+                <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a>
+            	<h1>Souk.tn</h1>
+                <div data-role="navbar" id="menu" class="nav-glyphish-example" data-grid="c">
                     <ul>
-                        <li><a href="index.html" id="home" data-icon="custom">Acceuil</a></li>
-                        <li><a href="about.html" id="about" data-icon="custom">A Propos</a></li>
-                        <li><a href="forum.html" id="forum" data-icon="custom">Forum</a></li>
+                        <li><a href="index.html" data-ajax='false' id="home" data-icon="custom">Acceuil</a></li>
+                        <li><a href="about.html" data-ajax='false' id="about" data-icon="custom">A Propos</a></li>
+                        <li id="for"><a href="forum.html" data-ajax='false' id="forum" data-icon="custom">Forum</a></li>
                         <li id="auth"></li>
                     </ul>
                 </div>
@@ -45,12 +46,17 @@
             <!-- /default panel -->
 
             <div data-role="content">
-                <a href="#" data-role="button" onclick="add()"> Add</a>
                 <form action="recherche.html" method="GET" data-ajax='false'>
                     <input type="text" name="searsh" id="search" value="" placeholder="Rechercher....">
                     <input type="submit" value="Rechecher" data-mini="true"/>
                 </form>
                 <hr>
+                <div data-role="navbar">
+                    <ul>
+                        <li class="fournisseur"></li>
+                        <li id="shop"></li>
+                    </ul>
+                </div><!-- /navbar -->
                 <div id="detail"></div>
                 <h3>Avis des internaute</h3>
                 <hr>
@@ -58,79 +64,13 @@
       
             </div><!-- /content -->
         </div><!-- /page -->
-
         <script>
             $(document).ready(function(){
-                // Get id from url
-                var url = document.URL; 
-                var stuff = url.split('=');
-                var idd = stuff[stuff.length-1];
-                // d�tails produit
-                $.ajax({
-                    type: 'POST',
-                    data: 'id='+idd,
-                    dataType: 'json',
-                    url: 'http://10.0.2.2:8081/mobile/listprodmobile/detailprod/',
-                    //url: 'http://localhost:8081/mobile/listprodmobile/detailprod',
-                     
-                    success: function(data){  
-                        var urlimg = 'http://10.0.2.2:8081/uploads/';
-                        var note='';
-                        for(i=1; i<=data['detail']['note']; i++){
-                            note += '<img style="margin-left:5px;"src="img/star-on.png">';
-                        }
-                        $("#detail").append(
-                            '<span id="detailprodpanier" data-idproduit="'+data['detail']['idproduit']
-                            +'" data-nomproduit="'+data['detail']['libelle']+'" data-prix="'
-                            +data['detail']['prix'] +'"></span><h3>'+ data['detail']['libelle']+'</h3><hr><img  class="hero" style="width: 294px;height:124px" src="'
-                            + urlimg+ data['detail']['photo']  
-                            +'"/> <p style="margin-left: 30%;">'+note+'</p><a style="color: rgb(177, 6, 12);font-weight: bold;" data-ajax="false" href="commercant.html?id='
-                            + data['detail']['commercant_idcommercant'] + '" > Fournisseur du produit</a>'
-                            +'<h4 style="color: rgb(177, 6, 12);">Descritpion :</h4><p>'+ data['detail']['description']
-                            + '</p>'
-                            +'<h4 style="color: rgb(177, 6, 12);">Stock : <span style="color: black">'+ data['detail']['stock']
-                            + '</h4></span>'
-                            +'<h4 style="color: rgb(177, 6, 12);">Prix : <span style="color: black">'+ data['detail']['prix']
-                            + 'DT</h4></span>' );
-                    },
-                    error: function(){
-                        alert('il y a un probleme!!');                        
-                    } 
-                });
-                //liste des avis
-                $.ajax({
-                    type: 'POST',
-                    data: 'id='+idd,
-                    dataType: 'json',
-                    url: 'http://10.0.2.2:8081/mobile/listprodmobile/avismobile/',
-                    //url: 'http://localhost:8081/mobile/listprodmobile/avismobile',
-                     
-                    success: function(data){  
-                        if (data['avis'].length == 0) {
-                            $('#avis').append('<li data-role="list-divider" data-theme="e"><p style="white-space: normal;margin-top: 0px;color: rgb(255, 112, 0);"><strong> Il n\'existe aucun Avis </strong></p></li>');
-                        }
-                        else{
-                            for (key in data['avis'])
-                            {  
-                                date = data['avis'][key]['datepublication'];
-                                $('#avis').append(
-                                '<li data-role="list-divider">'
-                                    + data['avis'][key]['client_idclient']  
-                                    +'<span class="ui-li-aside">'+date
-                                    +'</span></li><li data-role="fieldcontain"><p style="white-space: normal;"> '
-                                    + data['avis'][key]['contenu']
-                                    + '</p></li>'
-                            );
-                                $('#avis').listview('refresh');
-                            }
-                        }
-                    },
-                    error: function(){
-                        alert('il y a un probleme!!');                        
-                    } 
-                });
+            if (window.localStorage.getItem('type') == 'client'){
+                   $("#shop").append('<a href="#" data-role="button" onclick="add()">Ajouter au panier</a>');
+                   $('#shop').navbar();
+            }
             });
         </script>
-  
     </body>
 </html>
