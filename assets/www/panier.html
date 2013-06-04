@@ -29,42 +29,42 @@
                     
             }
             
-             function reqcmd(tx, results)
-                {
+            function reqcmd(tx, results)
+            {
 
-                   var len = results.rows.length;
-                   alert(len);
-                   tableau = new Array();
-                   var tab= new Array();
+                var len = results.rows.length;
+                tableau = new Array();
+                tabs= new Array();
                    
-                    for (var i=0; i<len; i++){
-                            tab['nom'] = results.rows.item(i).nomproduit;
-                            tab['prix'] = results.rows.item(i).prix;
-                            tab['idclient'] = results.rows.item(i).idclient;
-                            tableau.push(tab);
-                    }
-
-                  //  var jsonString = JSON.stringify(tableau);
-                    //alert(jsonString);
-                    //alert(jsonString[0]);
-                    $.ajax({
-                        type: 'POST',
-                        data:  {tabb : tableau},
-                       // dataType: 'json',
-                        //url: 'http://localhost:8081/mobile/listprodmobile/login',
-                        url: 'http://10.0.2.2:8081/mobile/listprodmobile/panier',
-                        success: function(res){
-                            alert(res);
-                            //tx.executeSql('DROP TABLE IF EXISTS PANIER');
-                            //window.localStorage.setItem("panier", 0);
-                            //window.location = 'index.html';
-                        },
-                        error: function(resultat){
-                            alert(resultat);
-                            alert('il y a un probleme!!');                        
-                        }
-                    });
+                for ( i=0; i<len; i++){
+                    tabs = [];
+                    tabs.push(results.rows.item(i).nomproduit);
+                    tabs.push(results.rows.item(i).prix);
+                    tabs.push(results.rows.item(i).idclient);
+                    tableau.push(tabs);
+                    tabs = [];
                 }
+
+               
+                myCars = JSON.stringify(tableau);
+                $.ajax({
+                    type: 'POST',
+                    data:  {myCars : myCars},
+                    //  dataType: 'json',
+                    //url: 'http://localhost:8081/mobile/listprodmobile/login',
+                    url: 'http://10.0.2.2:8081/mobile/listprodmobile/panier',
+                    success: function(res){
+                        alert(res);
+                        //tx.executeSql('DROP TABLE IF EXISTS PANIER');
+                        //window.localStorage.setItem("panier", 0);
+                        //window.location = 'index.html';
+                    },
+                    error: function(resultat){
+                        alert(resultat);
+                        alert('il y a un probleme!!');                        
+                    }
+                });
+            }
             
             function annuler()
             {
@@ -86,9 +86,9 @@
         </script>
     </head>
     <body>
-            <div data-role="page">
+        <div data-role="page">
             <!-- header -->
-               <div data-role="header" data-position="fixed">
+            <div data-role="header" data-position="fixed">
                 <a href="#defaultpanel" data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true">Liste de catégories</a>
                 <h1>Souk.tn</h1>
                 <div data-role="navbar" id="menu" class="nav-glyphish-example" data-grid="c">
@@ -129,8 +129,6 @@
                     </tr>
                 </table>
             </div>
-            </div>
-
-     
+        </div>
     </body>
 </html>
