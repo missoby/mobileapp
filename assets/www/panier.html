@@ -37,10 +37,11 @@
                 tabs= new Array();
                    
                 for ( i=0; i<len; i++){
-                    tabs = [];
+                    tabs = [];                   
+                    tabs.push(results.rows.item(i).idproduit);
+                    tabs.push(results.rows.item(i).idclient);
                     tabs.push(results.rows.item(i).nomproduit);
                     tabs.push(results.rows.item(i).prix);
-                    tabs.push(results.rows.item(i).idclient);
                     tableau.push(tabs);
                     tabs = [];
                 }
@@ -54,10 +55,11 @@
                     //url: 'http://localhost:8081/mobile/listprodmobile/login',
                     url: 'http://10.0.2.2:8081/mobile/listprodmobile/panier',
                     success: function(res){
-                        alert(res);
+                        annuler();
+                        alert('Acceder à Notre Plateforme Pour Continuer');
                         //tx.executeSql('DROP TABLE IF EXISTS PANIER');
                         //window.localStorage.setItem("panier", 0);
-                        //window.location = 'index.html';
+                        window.location = 'index.html';
                     },
                     error: function(resultat){
                         alert(resultat);
