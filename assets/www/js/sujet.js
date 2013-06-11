@@ -10,7 +10,7 @@
                     //url: 'http://localhost:8081/mobile/listprodmobile/forum_listsujet_mobile',
                     success: function(data){ 
                          if (data['sujet'].length == 0) {
-                            $('#sujet').append('<li data-role="list-divider" data-theme="e"><p style="white-space: normal;margin-top: 0px;color: rgb(255, 112, 0);"><strong> Il n\'existe aucun sujet dans cette cat�gorie </strong></p></li>');
+                            $('#sujet').append('<li data-role="list-divider" data-theme="e"><p style="white-space: normal;margin-top: 0px;color: rgb(255, 112, 0);"><strong> Il n\'existe aucun sujet dans cette categorie </strong></p></li>');
                         }
                         else{
                         for (key in data['sujet'])

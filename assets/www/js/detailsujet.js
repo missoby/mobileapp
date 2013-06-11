@@ -13,8 +13,7 @@ $(document).ready(function(){
             $('#sujetdetail').append(
                 '<li data-role="list-divider">'+ data['sujetdetail']['nom']
                 + '<span class="ui-li-aside">'+ data['sujetdetail']['datepublication']
-                + '</span></li>'
-                + '<li data-role="fieldcontain"><p style="white-space: normal;"><strong>'
+                + '</span></li><li data-role="fieldcontain"><p style="white-space: normal;"><strong>'
                 + data['sujetdetail']['titre'] +'</strong></p>'
                 + '<p style="white-space: normal;">'
                 + data['sujetdetail']['contenu'] +'</p></li>');

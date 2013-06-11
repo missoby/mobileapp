@@ -17,11 +17,11 @@ $(document).ready(function(){
             $("#info").append(
                 '<li data-role="list-divider">'
                 + data['commercant']['societe']  
-                +'<span class="ui-li-aside">'+data['commercant']['siteweb']
-                +'</span></li><li data-role="fieldcontain"><p style="white-space: normal;"><strong> '
+                +'</li><li data-role="fieldcontain"><p style="white-space: normal;"><strong> '
                 + data['commercant']['adrsoc'] 
                 + '</strong><span class="ui-li-aside">'+ data['commercant']['telpro'] 
-                + '</span></p><p style="white-space: normal;">'+ data['commercant']['descsoc']+ '</p></li>'
+                + '</span></p><p><strong>'+data['commercant']['siteweb']
+                +'</strong></p><p style="white-space: normal;">'+ data['commercant']['descsoc']+ '</p></li>'
                 );
             $('#info').listview('refresh');
         },

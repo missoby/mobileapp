@@ -13,7 +13,7 @@ $(document).ready(function(){
                      
         success: function(data){ 
             if (data['produit'].length == 0) {
-                $('#commentaire').append('<li data-role="fieldcontain"><p style="white-space: normal;"> Aucun Avis Existant</p></li>');
+                $('#commentaire').append('<li data-role="fieldcontain"><p style="white-space: normal;"> Aucun achat n\'a été effectuer</p></li>');
             }
             else{
                 for (key in data['produit'])
